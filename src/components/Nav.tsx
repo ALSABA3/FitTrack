@@ -6,32 +6,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import ModeToggle from "@/components/mode-toggle";
-import CartModal from "./CartModal";
-import { CartContext } from "@/components/shopping-cart";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState } from "react";
 
-const Header = () => {
-  const modal = useRef<any>(null); // Corrected useRef type
-  const { items } = useContext(CartContext);
-  const cartQuantity = items.length;
+const Nav = () => {
   const TOP_OFFSET = 50;
   const [showBackground, setShowBackground] = useState(false);
-
-  const handleOpenCartClick = () => {
-    if (modal.current && modal.current.open) {
-      modal.current.open();
-    }
-  };
-
-  let modalActions = <button>Close</button>;
-  if (cartQuantity > 0) {
-    modalActions = (
-      <>
-        <button>Close</button>
-        <button>Checkout</button>
-      </>
-    );
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +34,6 @@ const Header = () => {
         showBackground ? "bg-white" : ""
       }`}
     >
-      <CartModal ref={modal} title="Your Cart" actions={modalActions} />
       <div className="container flex py-4">
         <NavigationMenu className="justify-between max-w-none">
           <a href="/" className="logo flex justify-center items-center">
@@ -126,11 +104,6 @@ const Header = () => {
             <NavigationMenuItem>
               <ModeToggle />
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Button onClick={handleOpenCartClick}>
-                Cart ({cartQuantity})
-              </Button>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -138,4 +111,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Nav;

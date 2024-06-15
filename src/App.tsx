@@ -1,12 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import useAuth from "./components/useAuth";
 import { ThemeProvider } from "@/components/theme-provider";
-import Header from "@/components/Header";
+import LoggedNav from "@/components/LoggedNav";
 import CartContextProvider from "@/components/shopping-cart.jsx";
 import Home from "./Pages/Home";
 import { LoginForm } from "./Pages/Login";
 import { SignUpForm } from "./Pages/Signup";
 import Shop from "@/Pages/Shop";
+import Nav from "./components/Nav";
+import Dashboard from "./Pages/Dashboard";
+import Error from "./Pages/Error";
+import Profile from "./Pages/Profile";
+import Meals from "./Pages/Meals";
+import WorkOut from "./Pages/WorkOut";
 
 // import { ModeToggle } from "./components/mode-toggle";
 
@@ -17,15 +23,38 @@ function App() {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <CartContextProvider>
           <BrowserRouter>
-            {isLoggedIn ? <Header logout={logout} /> : <Header />}
+            {isLoggedIn ? <LoggedNav logout={logout} /> : <Nav />}
             <Routes>
-              <Route path="/" element={<Home />}></Route>
+              <Route
+                path="/"
+                element={isLoggedIn ? <Dashboard /> : <Home />}
+              ></Route>
               <Route
                 path="/Login"
-                element={<LoginForm login={login} />}
+                element={
+                  isLoggedIn ? <Dashboard /> : <LoginForm login={login} />
+                }
               ></Route>
-              <Route path="/SignUp" element={<SignUpForm />}></Route>
-              <Route path="/Shop" element={<Shop />}></Route>
+              <Route
+                path="/SignUp"
+                element={isLoggedIn ? <Dashboard /> : <SignUpForm />}
+              ></Route>
+              <Route
+                path="/Shop"
+                element={isLoggedIn ? <Shop /> : <Error />}
+              ></Route>
+              <Route
+                path="/Profile"
+                element={isLoggedIn ? <Profile /> : <Error />}
+              ></Route>
+              <Route
+                path="/Meals"
+                element={isLoggedIn ? <Meals /> : <Error />}
+              ></Route>
+              <Route
+                path="/WorkOut"
+                element={isLoggedIn ? <WorkOut /> : <Error />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         </CartContextProvider>
