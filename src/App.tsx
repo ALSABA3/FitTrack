@@ -13,6 +13,7 @@ import Error from "./Pages/Error";
 import Profile from "./Pages/Profile";
 import Meals from "./Pages/Meals";
 import WorkOut from "./Pages/WorkOut";
+import Library from "./Pages/Library";
 
 // import { ModeToggle } from "./components/mode-toggle";
 
@@ -41,8 +42,8 @@ function App() {
               ></Route>
               <Route
                 path="/Shop"
-                element={isLoggedIn ? <Shop /> : <Error />}
-              ></Route>
+                element={isLoggedIn ? <Shop /> : <Shop />} // /Error
+              ></Route> 
               <Route
                 path="/Profile"
                 element={isLoggedIn ? <Profile /> : <Error />}
@@ -54,6 +55,10 @@ function App() {
               <Route
                 path="/WorkOut"
                 element={isLoggedIn ? <WorkOut /> : <Error />}
+              ></Route>
+              <Route
+                path="/Library"
+                element= {<Library/>}
               ></Route>
             </Routes>
           </BrowserRouter>
