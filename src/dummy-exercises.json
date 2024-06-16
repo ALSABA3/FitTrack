@@ -1,0 +1,45 @@
+[
+    {
+      "id": "1",
+      "image": "/public/exercise/squats.jpg",
+      "title": "Squats",
+      "description": "Strength exercise in which the trainee lowers their hips from a standing position and then stands back up",
+      "calorieBurning": 4
+    },
+    {
+      "id": "2",
+      "image": "/public/exercise/MarchingInPlace.jpg",
+      "title": "Marching in place",
+      "description": "It's an effective physical activity that complements your weekly regimen without being too hard on your joints",
+      "calorieBurning": 5
+    },
+    {
+      "id": "3",
+      "image": "/public/exercise/SingleKneeRotation.jpg",
+      "title": "Single knee rotation",
+      "description": "Motion of the toes outward and the heel inward is knee external rotation. As the toes go in and the heel goes out, this is knee internal rotation",
+      "calorieBurning": 2
+    },
+    {
+      "id": "4",
+      "image": "/public/exercise/plank.jpg",
+      "title": "Plank",
+      "description": "An isometric core strength exercise that involves maintaining a position similar to a push-up",
+      "calorieBurning": 1
+    },
+    {
+      "id": "5",
+      "image": "/public/exercise/PushUps.jpg",
+      "title": "Push-ups",
+      "description": "A conditioning exercise performed in a prone position by raising and lowering the body with the straightening and bending of the arms while keeping the back straight and supporting the body on the hands and toes",
+      "calorieBurning": 3
+    },
+    {
+      "id": "6",
+      "image": "/public/exercise/PullUps.jpg",
+      "title": "Pull-ups",
+      "description": "An exercise in which one hangs by the hands from a support (such as a horizontal bar) and pulls oneself up until the chin is level with the support",
+      "calorieBurning": 2
+    }
+  ]
+  
