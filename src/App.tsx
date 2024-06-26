@@ -12,7 +12,7 @@ import Dashboard from "./Pages/Dashboard";
 import Error from "./Pages/Error";
 import Profile from "./Pages/Profile";
 import Meals from "./Pages/Meals";
-import WorkOut from "./Pages/WorkOut";
+import Workouts from "./Pages/Workouts";
 import Library from "./Pages/Library";
 
 // import { ModeToggle } from "./components/mode-toggle";
@@ -28,7 +28,7 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={isLoggedIn ? <Dashboard /> : <Home />}
+                element={isLoggedIn ? <Dashboard /> : <Dashboard />} // <Home />
               ></Route>
               <Route
                 path="/Login"
@@ -42,7 +42,7 @@ function App() {
               ></Route>
               <Route
                 path="/Shop"
-                element={isLoggedIn ? <Shop /> : <Shop />} // /Error
+                element={isLoggedIn ? <Shop /> : <Shop />} // <Error />
               ></Route> 
               <Route
                 path="/Profile"
@@ -54,7 +54,7 @@ function App() {
               ></Route>
               <Route
                 path="/WorkOut"
-                element={isLoggedIn ? <WorkOut /> : <Error />}
+                element={isLoggedIn ? <Workouts /> : <Workouts />} //<Error />
               ></Route>
               <Route
                 path="/Library"
