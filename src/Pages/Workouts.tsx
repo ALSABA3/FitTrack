@@ -97,7 +97,7 @@ const Workouts = () => {
   async function addWorkoutToday(workoutInfo: WorkoutModel){
     try{
       await store.addWorkout(workoutInfo);
-      await getWorkoutsToday();
+      getWorkoutsToday();
     }catch(e){
         console.log(e);
     }
