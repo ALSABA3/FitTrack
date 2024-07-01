@@ -28,7 +28,7 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={isLoggedIn ? <Dashboard /> : <Dashboard />} // <Home />
+                element={isLoggedIn ? <Dashboard /> : <Home />} // <Home />
               ></Route>
               <Route
                 path="/Login"
@@ -42,7 +42,7 @@ function App() {
               ></Route>
               <Route
                 path="/Shop"
-                element={isLoggedIn ? <Shop /> : <Shop />} // <Error />
+                element={isLoggedIn ? <Shop /> : <Error />} 
               ></Route> 
               <Route
                 path="/Profile"
@@ -60,6 +60,10 @@ function App() {
                 path="/Library"
                 element= {<Library/>}
               ></Route>
+              
+
+              { //For DEBUG
+              <Route path="/Dashboard" element= {<Dashboard/>}/> }
             </Routes>
           </BrowserRouter>
         </CartContextProvider>

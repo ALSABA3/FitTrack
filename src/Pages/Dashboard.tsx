@@ -7,7 +7,6 @@ import UserService from "@/services/UserServices";
 import { IWorkout } from "@/models/IWorkout";
 
 
-
 const Container = styled.div`
   flex: 1;
   height: 100%;
@@ -116,7 +115,7 @@ const Dashboard = () => {
             />
           </FlexWrap>
           <Section>
-           
+          <h3 className="text-2xl font-semibold mb-3 text-center">Today's workouts</h3>
             <CardWrapper>
               {workoutsToday.map((workout) => (
                 <WorkoutCard key = {workout._id} {...workout}/>
