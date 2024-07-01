@@ -67,10 +67,11 @@ const WorkoutNames: WorkoutName[] = [
 
 interface IModal{
   setOpenModal: Function,
-  addWorkoutToday: Function
+  addWorkoutToday: Function,
+  date: Date
 }
 
-function Modal({ setOpenModal, addWorkoutToday }: IModal) {
+function Modal({ setOpenModal, addWorkoutToday, date }: IModal) {
   const [categoryName, setCategoryName] = React.useState<ArrayObjectSelectCategoryName>({
     selectedCategoryName: null,
   });
@@ -172,7 +173,8 @@ function Modal({ setOpenModal, addWorkoutToday }: IModal) {
                 sets, 
                 reps, 
                 weight, 
-                duration
+                duration,
+                date
               });
             }}
           >Submit</button>

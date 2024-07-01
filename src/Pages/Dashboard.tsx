@@ -5,8 +5,8 @@ import WorkoutCard from "../components/ui/WorkoutCard";
 import { Context } from "../main";
 import UserService from "@/services/UserServices";
 import { IWorkout } from "@/models/IWorkout";
-import Modal from "@/components/Modal";
-import { WorkoutModel } from "@/models/Workout";
+
+
 
 const Container = styled.div`
   flex: 1;
@@ -48,33 +48,11 @@ const CardWrapper = styled.div`
   margin-bottom: 100px;
 `;
 
-const Title = styled.div`
-  padding: 0px 16px;
-  font-size: 22px;
-  color: #404040;
-  font-weight: 500;
-`;
 
-const Button = styled.button`
-    border: none;
-    display: inline-block;
-    padding: 8px 16px;
-    vertical-align: middle;
-    overflow: hidden;
-    text-decoration: none;
-    color: white;
-    text-font:bold;
-    background-color: inherit;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
-    background-color: #009688;
-`;
 
 const Dashboard = () => {
   const {store} = useContext(Context);
   const [workoutsToday, setWorkoutsToday] = useState<IWorkout[]>([]);
-  const [modalOpen, setModalOpen] = useState(false);
 
   async function getWorkoutsToday(){
     try{
@@ -86,15 +64,7 @@ const Dashboard = () => {
     }
   }
 
-  async function addWorkoutToday({category, name, sets, reps, weight, duration}: WorkoutModel){
-    try{
-      console.log(category, name, sets, reps, weight, duration)
-      await store.addWorkout({category:category, name: name, sets: sets, reps: reps, weight: weight, duration: duration});
-      await getWorkoutsToday();
-    }catch(e){
-        console.log(e);
-    }
-  }
+  
 
   useEffect(() => {
     getWorkoutsToday();
@@ -146,10 +116,7 @@ const Dashboard = () => {
             />
           </FlexWrap>
           <Section>
-            <div style={{display:"flex"}}>
-              <Title>Todays Workouts</Title>
-              <Button onClick={() => setModalOpen(true)}>Add Workout +</Button> 
-            </div>
+           
             <CardWrapper>
               {workoutsToday.map((workout) => (
                 <WorkoutCard key = {workout._id} {...workout}/>
@@ -158,7 +125,7 @@ const Dashboard = () => {
         </Section>
         </Wrapper>
       </Container>
-      {modalOpen && <Modal setOpenModal={setModalOpen} addWorkoutToday={addWorkoutToday} />}
+      
     </section>
   );
 };

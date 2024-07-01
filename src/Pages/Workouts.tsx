@@ -7,6 +7,8 @@ import { DateCalendar } from "@mui/x-date-pickers";
 import UserService from "@/services/UserServices";
 import { Context } from "@/main";
 import { IWorkout } from "@/models/IWorkout";
+import { WorkoutModel } from "@/models/Workout";
+import Modal from "@/components/Modal";
 
 const Container = styled.div`
   flex: 1;
@@ -31,11 +33,6 @@ const Left = styled.div`
   border-radius: 14px;
   box-shadow: 1px 6px 20px 0px #007AFF15;
 `;
-const Title = styled.div`
-  font-weight: 600;
-  font-size: 16px;
-  color: #007AFF;
-`;
 const Right = styled.div`
   flex: 1;
 `;
@@ -58,22 +55,55 @@ const SecTitle = styled.div`
   color: #404040;
   font-weight: 500;
 `;
+const Title = styled.div`
+  padding: 0px 16px;
+  font-size: 22px;
+  color: #404040;
+  font-weight: 500;
+`;
+
+const Button = styled.button`
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    text-font:bold;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #009688;
+`;
+
 
 const Workouts = () => {
   const {store} = useContext(Context);
   const [workoutsToday, setWorkoutsToday] = useState<IWorkout[]>([]);
   const [date, setDate] = useState(`${new Date()}`);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  
   async function getWorkoutsToday(){
     try{
       const response = await UserService.getWorkoutsToday(store.user.username, new Date(date));
       setWorkoutsToday(response.data);
     }catch(e){
-        console.log(e);
+      console.log(e);
     }
   }
 
-  useEffect(() => {
+  async function addWorkoutToday(workoutInfo: WorkoutModel){
+    try{
+      await store.addWorkout(workoutInfo);
+      await getWorkoutsToday();
+    }catch(e){
+        console.log(e);
+    }
+  }
+  
+  useEffect( () => {
     getWorkoutsToday();
   }, [date]);
 
@@ -92,6 +122,9 @@ const Workouts = () => {
           </Left>
           <Right>
             <Section>
+              <div style={{display:"flex"}}>
+                <Button onClick={() => setModalOpen(true)}>Add Workout +</Button> 
+              </div>
               <SecTitle>Todays Workout</SecTitle>
                 <CardWrapper>
                   {workoutsToday.map((workout) => (
@@ -102,6 +135,7 @@ const Workouts = () => {
           </Right>
         </Wrapper>
       </Container>
+      {modalOpen && <Modal setOpenModal={setModalOpen} addWorkoutToday={addWorkoutToday} date={new Date(date)}/>}
     </section>
   );
 };

@@ -97,7 +97,6 @@ export default class Store{
 
     async addWorkout(workout: WorkoutModel){
         try{ 
-            console.log(workout);
             await UserService.addWorkout(this.user.username, workout);
         } catch(e){
             if (axios.isAxiosError(e)) {

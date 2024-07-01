@@ -4,5 +4,6 @@ export interface WorkoutModel {
     sets:number,
     reps:number,
     weight:number,
-    duration:number
+    duration:number,
+    date: Date
   }
