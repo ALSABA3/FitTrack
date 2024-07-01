@@ -19,8 +19,8 @@ export default class UserService {
     return $api.post<IWorkout[]>('/getWorkoutsToday', {username, date});
   }
 
-  static addWorkout(username: string, workout:WorkoutModel){
-    $api.post('/addWorkout', {username, workout});
+  static async addWorkout(username: string, workout:WorkoutModel){
+    await $api.post('/addWorkout', {username, workout});
   }
 
   
