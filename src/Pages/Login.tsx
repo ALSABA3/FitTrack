@@ -8,10 +8,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { Context } from "@/main";
 
 export function LoginForm() {
+  const {store} = useContext(Context); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,7 +83,7 @@ export function LoginForm() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick = {() => store.login(email, password)}>
               Login
             </Button>
             <Button variant="outline" className="w-full">

@@ -18,14 +18,16 @@ import ModeToggle from "@/components/mode-toggle";
 import CartModal from "./CartModal";
 import { CartContext } from "@/components/shopping-cart";
 import { useEffect, useState, useContext, useRef } from "react";
+import { Context } from "@/main";
 
-const LoggedNav = ({ logout }) => {
+const LoggedNav = () => {
   const modal = useRef<any>(null); // Corrected useRef type
   const { items } = useContext(CartContext);
   const cartQuantity = items.length;
   const TOP_OFFSET = 50;
   const [showBackground, setShowBackground] = useState(false);
-
+  const {store} = useContext(Context);
+  
   const handleOpenCartClick = () => {
     if (modal.current && modal.current.open) {
       modal.current.open();
@@ -162,7 +164,7 @@ const LoggedNav = ({ logout }) => {
                 <ModeToggle />
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Button className="text-base mr-2" onClick={logout}>
+                <Button className="text-base mr-2" onClick={store.logout}>
                   <a href="/Login">Sign Out</a>
                 </Button>
               </DropdownMenuItem>

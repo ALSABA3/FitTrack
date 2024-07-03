@@ -4,46 +4,53 @@ const TokenService = require("./token-service");
 const WorkoutModel = require("../models/workout-model");
 const UserDto = require("../dtos/user-dto");
 const ApiError = require("../exceptions/api-error");
+const ProfileModel = require("../models/Profile-model.js");
+
+
 
 class UserService {
-  async registrationService(username, password) {
-    const candidate = await UserModel.findOne({ username });
+  async registrationService(email, password) {
+    const candidate = await UserModel.findOne({ email });
 
     if (candidate) {
       throw ApiError.BadRequest(
-        `Пользователь с именем ${username} уже существует`
+        `User ${email} exist`
       );
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
 
     const user = await UserModel.create({
-      username,
+      email,
       password: hashPassword
     });
 
-    const userDto = new UserDto(user); //хранить _id из базы, что мы будем хранить в токене
+    await ProfileModel.create({
+      email
+    })
+
+    const userDto = new UserDto(user);
 
     const tokens = TokenService.generateTokens({ ...userDto });
 
-    await TokenService.saveToken(userDto.id, tokens.refreshToken); //Кидает в БД(Токен ветку) токены
+    await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return { ...tokens, user: userDto };
   }
 
-  async login(username, password) {
-    const user = await UserModel.findOne({ username });
+  async login(email, password) {
+    const user = await UserModel.findOne({ email });
     if (!user) {
-      throw ApiError.BadRequest("Пользователь с таким логином не найден");
+      throw ApiError.BadRequest("No user with this login was found");
     }
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
-      throw ApiError.BadRequest("Неверный пароль");
+      throw ApiError.BadRequest("Incorrect password");
     }
 
     const userDto = new UserDto(user);
     const tokens = TokenService.generateTokens({ ...userDto });
-    await TokenService.saveToken(userDto.id, tokens.refreshToken); //Кидает в БД(Токен ветку) токены
+    await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return { ...tokens, user: userDto };
   }
@@ -79,8 +86,8 @@ class UserService {
     return users;
   }
 
-  async getAllWorkoutsToday(username, date) {
-    const user = await UserModel.findOne({ username });
+  async getAllWorkoutsToday(email, date) {
+    const user = await UserModel.findOne({ email });
     const thatDate = new Date(date);
 
     const startOfDay = new Date(
@@ -94,8 +101,8 @@ class UserService {
     return workouts;
   }
 
-  async addWorkout(username, workout) {
-    const user = await UserModel.findOne({ username });  
+  async addWorkout(email, workout) {
+    const user = await UserModel.findOne({ email });  
     const date = new Date(workout.date);
     
     const startOfDay = new Date(
@@ -106,6 +113,13 @@ class UserService {
     await WorkoutModel.create({ user: user._id, ...workout, date: startOfDay });
   }
   
+  async updateProfile(email, profile) {
+    console.log(profile);
+    await ProfileModel.findOneAndUpdate({email}, {
+      email,
+      ...profile
+    });
+  }
 }
 
 module.exports = new UserService();

@@ -8,11 +8,16 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import GoogleLoginButton from "./../components/ui/GoogleLoginButton";
+import AuthService from "@/services/AuthService";
+import { Context } from "@/main";
+import { useNavigate } from "react-router-dom";
 
 export function SignUpForm() {
+  const {store} = useContext(Context); 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_Name: "",
     last_Name: "",
@@ -20,19 +25,35 @@ export function SignUpForm() {
     password: "",
   });
 
+
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+    
   };
+  const registration = async () =>{
+    try{
+      const user = await store.registration(formData.email, formData.password);
+      if(user)
+        {navigate('/Profile')}
+    }
+
+    catch(e){
+      console.log(e);
+    }
+  }
 
   const handleSubmit = async (e: any) => {
+    console.log(formData);
     e.preventDefault();
+    
     try {
-      await axios.post("http://127.0.0.1:8000/api/register", formData);
-      console.log("Signup successful!");
+     
+      await AuthService.registration(formData.email, formData.password  )
     } catch (error: any) {
       console.error(
         "Error:",
@@ -105,7 +126,7 @@ export function SignUpForm() {
                 type="password"
               />
             </div>
-            <Button type="submit" className="w-full" onSubmit={handleSubmit}>
+            <Button type="submit" className="w-full" onClick = {registration}>
               Create an account
             </Button>
             {/* <Button variant="outline" className="w-full">

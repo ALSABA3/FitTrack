@@ -55,7 +55,7 @@ const Dashboard = () => {
 
   async function getWorkoutsToday(){
     try{
-      const response = await UserService.getWorkoutsToday(store.user.username, new Date());
+      const response = await UserService.getWorkoutsToday(store.user.email, new Date());
       setWorkoutsToday(response.data);
     }catch(e){
         console.log(e);

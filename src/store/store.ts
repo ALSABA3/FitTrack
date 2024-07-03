@@ -5,13 +5,16 @@ import axios from "axios";
 import { AuthResponse } from "../models/response/AuthResponse";
 import { API_URL } from "../http";
 import UserService from "@/services/UserServices";
-import { IWorkout } from "@/models/IWorkout";
 import { WorkoutModel } from "@/models/Workout";
-
+import { useNavigate } from "react-router-dom";
+import { IProfile } from "@/models/IProfile";
   
 
+
 export default class Store{
-    user = {id: "sadsda", username: "vadim"} as IUser;
+    
+    user = {} as IUser;
+    profile = {} as IProfile;
     isAuth = false;
     isLoading = false;
 
@@ -23,6 +26,10 @@ export default class Store{
         this.user = user;
     }
 
+    setProfile(profile: IProfile){
+        this.profile = profile;
+    }
+
     setAuthStatus(status: boolean){
         this.isAuth = status;
     }
@@ -31,14 +38,14 @@ export default class Store{
         this.isLoading = status;
     }
 
-    /*
-    async login(username: string, password: string){
+    async login(email: string, password: string){
         try{        
-            const response = await AuthService.login(username, password);
+            const response = await AuthService.login(email, password);
             console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setUser(response.data.user);   
             this.setAuthStatus(true);
+            useNavigate()("/Dashboard");
         } catch(e){
                 if (axios.isAxiosError(e)) {
                 console.log(e.response?.data?.message);         
@@ -46,14 +53,14 @@ export default class Store{
         }
     }
     
-    
-    async registration(username: string, password: string){
+    async registration(email: string, password: string){
         try{
-            const response = await AuthService.registration(username, password);
+            const response = await AuthService.registration(email, password);
             console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setUser(response.data.user); 
             this.setAuthStatus(true);
+            return true;
         } catch(e){
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.data?.message);         
@@ -79,10 +86,11 @@ export default class Store{
         try{
             
             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});          
-            console.log(response); //для DEBUG
+            console.log(response);
             localStorage.setItem('token', response.data.accessToken);
             this.setUser(response.data.user);
             this.setAuthStatus(true);
+            console.log(this.isAuth)
         }
         catch(e){
             if (axios.isAxiosError(e)) {
@@ -91,13 +99,22 @@ export default class Store{
         } finally{
             this.setLoading(false);
         }
-    
     }
-    */
 
     async addWorkout(workout: WorkoutModel){
         try{ 
-            await UserService.addWorkout(this.user.username, workout);
+            await UserService.addWorkout(this.user.email, workout);
+        } catch(e){
+            if (axios.isAxiosError(e)) {
+                console.log(e.response?.data?.message);         
+            }
+        }
+    }
+
+    async updateProfile(profile: IProfile){
+        try{ 
+            await UserService.updateProfile(this.user.email, profile);
+            return true;
         } catch(e){
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.data?.message);         
@@ -107,7 +124,7 @@ export default class Store{
 
     async getWorkoutsToday(){
         try{
-            return await UserService.getWorkoutsToday(this.user.username, new Date());
+            return await UserService.getWorkoutsToday(this.user.email, new Date());
         } catch(e){
             if (axios.isAxiosError(e)) {
                 console.log(e.response?.data?.message);         

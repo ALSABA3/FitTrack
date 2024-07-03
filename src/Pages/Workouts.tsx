@@ -87,7 +87,7 @@ const Workouts = () => {
   
   async function getWorkoutsToday(){
     try{
-      const response = await UserService.getWorkoutsToday(store.user.username, new Date(date));
+      const response = await UserService.getWorkoutsToday(store.user.email, new Date(date));
       setWorkoutsToday(response.data);
     }catch(e){
       console.log(e);
@@ -98,6 +98,8 @@ const Workouts = () => {
     try{
       await store.addWorkout(workoutInfo);
       await getWorkoutsToday();
+      
+            
     }catch(e){
         console.log(e);
     }
@@ -123,7 +125,7 @@ const Workouts = () => {
           <Right>
             <Section>
               <div style={{display:"flex"}}>
-                <Button onClick={() => setModalOpen(true)}>Add Workout +</Button> 
+                <Button onClick={() => setModalOpen(true)}>Add Workout +</Button>
               </div>
               <SecTitle>Todays Workout</SecTitle>
                 <CardWrapper>

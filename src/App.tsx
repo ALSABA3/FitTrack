@@ -14,56 +14,82 @@ import Profile from "./Pages/Profile";
 import Meals from "./Pages/Meals";
 import Workouts from "./Pages/Workouts";
 import Library from "./Pages/Library";
+import {observer} from "mobx-react-lite"; 
+import { useContext, useEffect, useState } from "react";
+import { Context } from "./main";
 
 // import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
+  const {store} = useContext(Context);
+  
   const { isLoggedIn, accessToken, login, logout } = useAuth();
+
+  const checkAuth = async () =>{
+    await store.checkAuth();
+  }
+  
+  useEffect(  () => {
+    if (localStorage.getItem('token')) {
+      checkAuth();
+        if(store.user.email !== undefined){
+          store.setAuthStatus(true);
+        }
+    }     
+  }, [store.isAuth]);
+
+  console.log(store.isAuth)
+
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <CartContextProvider>
           <BrowserRouter>
-            {isLoggedIn ? <LoggedNav logout={logout} /> : <Nav />}
+            {store.isAuth ? <LoggedNav logout={logout} /> : <Nav />}
+            
             <Routes>
               <Route
                 path="/"
-                element={isLoggedIn ? <Dashboard /> : <Home />} // <Home />
+                element={store.isAuth ? <Dashboard /> : <Home />} 
               ></Route>
               <Route
                 path="/Login"
                 element={
-                  isLoggedIn ? <Dashboard /> : <LoginForm login={login} />
+                  store.isAuth ? <Dashboard /> : <LoginForm login={login} />
                 }
               ></Route>
               <Route
                 path="/SignUp"
-                element={isLoggedIn ? <Dashboard /> : <SignUpForm />}
+                element={store.isAuth ? <Dashboard /> : <SignUpForm />}
               ></Route>
               <Route
                 path="/Shop"
-                element={isLoggedIn ? <Shop /> : <Error />} 
+                element={store.isAuth ? <Shop /> : <Error />} 
               ></Route> 
               <Route
                 path="/Profile"
-                element={isLoggedIn ? <Profile /> : <Error />}
+                element={store.isAuth ? <Profile /> : <Error />}
               ></Route>
               <Route
                 path="/Meals"
-                element={isLoggedIn ? <Meals /> : <Error />}
+                element={store.isAuth ? <Meals /> : <Error />}
               ></Route>
               <Route
                 path="/WorkOut"
-                element={isLoggedIn ? <Workouts /> : <Workouts />} //<Error />
+                element={store.isAuth ? <Workouts /> : <Error />}
               ></Route>
               <Route
                 path="/Library"
                 element= {<Library/>}
               ></Route>
               
+              <Route
+                path="/Dashboard"
+                element={
+                  store.isAuth  ? <Dashboard /> : <Error />}
+              ></Route>
 
-              { //For DEBUG
-              <Route path="/Dashboard" element= {<Dashboard/>}/> }
+              
             </Routes>
           </BrowserRouter>
         </CartContextProvider>
@@ -72,4 +98,5 @@ function App() {
   );
 }
 
-export default App;
+
+export default observer(App);

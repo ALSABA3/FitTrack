@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    credentials: true, //разрешает обмен cookie
+    credentials: true,
     origin: process.env.CLIENT_URL, 
   })
 );
