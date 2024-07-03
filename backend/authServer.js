@@ -21,6 +21,7 @@ app.post("/login", async (req, res) => {
 
         const exist = await User.exists({userEmail: req.body.userEmail, userPassword: req.body.userPassword})
         const userID = await User.findOne({userEmail: req.body.userEmail, userPassword: req.body.userPassword}, '_id')
+        console.log(userID)
         if(exist){
             const decoded = {id : userID};
             const accessToken = generateAccessToken(decoded)

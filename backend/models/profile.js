@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema({
     
-    userID: {
-        type: String,
+    _id: {
+        type: mongoose.Types.ObjectId,
         required: true
     },
 
@@ -30,9 +30,9 @@ const profileSchema = new mongoose.Schema({
     gender: {
         type: String,
         required: true
-    }
+    },
+    
 
-
-})
+}, { _id: false });
 
 export default mongoose.model('Profile', profileSchema);

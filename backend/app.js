@@ -21,6 +21,9 @@ app.use('/user', userRouter)
 import profileRouter from './routes/profile.js';
 app.use('/profile', profileRouter)
 
+import blogRouter from './routes/blog.js';
+app.use('/blog', blogRouter)
+
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
