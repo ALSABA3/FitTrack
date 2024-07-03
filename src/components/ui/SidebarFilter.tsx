@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -10,11 +10,12 @@ interface FilterProps {
 }
 
 interface FilterState {
+  gender: string[];
   categories: string[];
-  priceRange: [number, number];
   brands: string[];
 }
 
+const gendersList = ["Male", "Female"];
 const categoriesList = [
   "T-Shirts",
   "Shorts",
@@ -26,8 +27,8 @@ const brandsList = ["Nike", "Adidas", "Under Armour", "Puma", "GymShark"];
 
 const SidebarFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [filters, setFilters] = useState<FilterState>({
+    gender: [],
     categories: [],
-    priceRange: [0, 100],
     brands: [],
   });
 
@@ -35,34 +36,16 @@ const SidebarFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
     onFilterChange(filters);
   }, [filters, onFilterChange]);
 
-  const handleCategoryChange = (category: string) => {
-    setFilters((prevFilters) => {
-      const categories = prevFilters.categories.includes(category)
-        ? prevFilters.categories.filter((c) => c !== category)
-        : [...prevFilters.categories, category];
-      return { ...prevFilters, categories };
-    });
-  };
-
-  const handleBrandChange = (brand: string) => {
-    setFilters((prevFilters) => {
-      const brands = prevFilters.brands.includes(brand)
-        ? prevFilters.brands.filter((b) => b !== brand)
-        : [...prevFilters.brands, brand];
-      return { ...prevFilters, brands };
-    });
-  };
-
-  const handlePriceChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    index: number
+  const handleCheckboxChange = (
+    filterType: keyof FilterState,
+    value: string
   ) => {
-    const newPriceRange = [...filters.priceRange] as [number, number];
-    newPriceRange[index] = Number(event.target.value);
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      priceRange: newPriceRange as [number, number],
-    }));
+    setFilters((prevFilters) => {
+      const updatedFilters = prevFilters[filterType].includes(value)
+        ? prevFilters[filterType].filter((item) => item !== value)
+        : [...prevFilters[filterType], value];
+      return { ...prevFilters, [filterType]: updatedFilters };
+    });
   };
 
   return (
@@ -71,18 +54,19 @@ const SidebarFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
         <CollapsibleTrigger className="w-full">Gender</CollapsibleTrigger>
         <CollapsibleContent>
           <div className="flex flex-col">
-            <div className="flexitems-center content-between">
-              <label>
-                <input type="checkbox" className="mx-4" />
-                Male
-              </label>
-            </div>
-            <div className="flex items-center content-center">
-              <label>
-                <input type="checkbox" className="mx-4" />
-                Female
-              </label>
-            </div>
+            {gendersList.map((gender) => (
+              <div className="flex items-center content-between" key={gender}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className="mx-4"
+                    checked={filters.gender.includes(gender)}
+                    onChange={() => handleCheckboxChange("gender", gender)}
+                  />
+                  {gender}
+                </label>
+              </div>
+            ))}
           </div>
         </CollapsibleContent>
       </Collapsible>
@@ -91,13 +75,15 @@ const SidebarFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
         <CollapsibleContent>
           <div className="flex flex-col">
             {categoriesList.map((category) => (
-              <div key={category} className="flexitems-center content-between">
+              <div key={category} className="flex items-center content-between">
                 <label>
                   <input
                     type="checkbox"
                     className="mx-4"
                     checked={filters.categories.includes(category)}
-                    onChange={() => handleCategoryChange(category)}
+                    onChange={() =>
+                      handleCheckboxChange("categories", category)
+                    }
                   />
                   {category}
                 </label>
@@ -117,7 +103,7 @@ const SidebarFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
                     type="checkbox"
                     className="mx-4"
                     checked={filters.brands.includes(brand)}
-                    onChange={() => handleBrandChange(brand)}
+                    onChange={() => handleCheckboxChange("brands", brand)}
                   />
                   {brand}
                 </label>

@@ -1,10 +1,10 @@
-import { forwardRef, useImperativeHandle, useRef, ReactNode } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import Cart from "./Cart";
 
 interface CartModalProps {
   title: string;
-  actions: ReactNode;
+  actions: React.ReactNode;
 }
 
 interface ModalHandle {
@@ -23,20 +23,23 @@ const CartModal = forwardRef<ModalHandle, CartModalProps>(function Modal(
         dialog.current.showModal();
       }
     },
+    close: () => {
+      if (dialog.current) {
+        dialog.current.close();
+      }
+    },
   }));
 
   return createPortal(
     <dialog id="modal" ref={dialog} className="rounded-lg">
       <h2 className="text-xl text-center my-4">{title}</h2>
       <Cart />
-      <form
-        method="dialog"
+      <div
         id="modal-actions"
-        className="text-xl flex items-center content-around my-4"
+        className="text-xl flex items-center justify-around my-4"
       >
-        <button className="w-1/2">Close</button>
-        <button className="w-1/2">Checkout</button>
-      </form>
+        {actions}
+      </div>
     </dialog>,
     document.getElementById("modal") as HTMLElement
   );

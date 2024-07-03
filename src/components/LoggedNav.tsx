@@ -14,33 +14,50 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ModeToggle from "@/components/mode-toggle";
+import ModeToggle from "@/components/ui/mode-toggle";
 import CartModal from "./CartModal";
-import { CartContext } from "@/components/shopping-cart";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "./Store/hooks";
+import { authActions } from "./Store/auth-slice";
+import { useNavigate } from "react-router-dom";
 
-const LoggedNav = ({ logout }) => {
+const LoggedNav = () => {
   const modal = useRef<any>(null); // Corrected useRef type
-  const { items } = useContext(CartContext);
+  const items = useAppSelector((state) => state.cart.items);
   const cartQuantity = items.length;
   const TOP_OFFSET = 50;
   const [showBackground, setShowBackground] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+    navigate("/");
+  };
 
   const handleOpenCartClick = () => {
-    if (modal.current && modal.current.open) {
+    if (modal.current.open) {
       modal.current.open();
     }
   };
+  const handleCloseCartClick = () => {
+    if (modal.current.close) {
+      modal.current.close();
+    }
+  };
 
-  let modalActions = <button>Close</button>;
-  if (cartQuantity > 0) {
-    modalActions = (
-      <>
-        <button>Close</button>
-        <button>Checkout</button>
-      </>
-    );
-  }
+  const modalActions = (
+    <>
+      <button
+        className="w-1/2"
+        formMethod="dialog"
+        onClick={handleCloseCartClick}
+      >
+        Close
+      </button>
+      {cartQuantity > 0 && <button className="w-1/2">Checkout</button>}
+    </>
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,7 +122,7 @@ const LoggedNav = ({ logout }) => {
           <NavigationMenuList className="mx-16">
             <NavigationMenuItem>
               <a
-                href="#HowItWorks"
+                href="/WorkOut"
                 className={"text-lg " + navigationMenuTriggerStyle()}
               >
                 WorkOut
@@ -113,7 +130,7 @@ const LoggedNav = ({ logout }) => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <a
-                href="#Reviews"
+                href="/Meals"
                 className={"text-lg " + navigationMenuTriggerStyle()}
               >
                 Meals
@@ -121,7 +138,7 @@ const LoggedNav = ({ logout }) => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <a
-                href="#Reviews"
+                href="/Blogs"
                 className={"text-lg " + navigationMenuTriggerStyle()}
               >
                 Blogs
@@ -162,8 +179,8 @@ const LoggedNav = ({ logout }) => {
                 <ModeToggle />
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Button className="text-base mr-2" onClick={logout}>
-                  <a href="/Login">Sign Out</a>
+                <Button className="text-base mr-2" onClick={handleLogout}>
+                  Sign Out
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>

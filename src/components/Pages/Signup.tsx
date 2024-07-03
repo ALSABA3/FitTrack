@@ -10,43 +10,62 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
-import GoogleLoginButton from "./../components/ui/GoogleLoginButton";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Store/hooks";
+import { authActions } from "../Store/auth-slice";
+// import GoogleLoginButton from "./../components/ui/GoogleLoginButton";
 
-export function SignUpForm() {
-  const [formData, setFormData] = useState({
-    first_Name: "",
-    last_Name: "",
-    email: "",
-    password: "",
-  });
+const SignUpForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handlePasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = async () => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/register", formData);
+      await axios.post("http://localhost:4000/user/signup", {
+        userEmail: email,
+        userPassword: password,
+      });
+
       console.log("Signup successful!");
-    } catch (error: any) {
+
+      try {
+        const response = await axios.post("http://localhost:5000/login", {
+          userEmail: email,
+          userPassword: password,
+        });
+        if (response.data.message === "logged in") {
+          dispatch(authActions.login(response.data.accessToken));
+          navigate("/Profile");
+        }
+      } catch (error) {
+        console.error("Error logging in:", error);
+        return;
+      }
+    } catch (signupError: any) {
       console.error(
-        "Error:",
-        error.response?.data?.error || "An error occurred"
+        "Signup error:",
+        signupError.response?.data?.error || "An error occurred during signup"
       );
+      return;
     }
   };
 
-  const responseMessage = (response: any) => {
-    console.log(response);
-  };
-  const errorMessage = (error: any) => {
-    console.log(error);
-  };
+  // const responseMessage = (response: any) => {
+  //   console.log(response);
+  // };
+  // const errorMessage = (error: any) => {
+  //   console.log(error);
+  // };
 
   return (
     <div className="container h-screen flex justify-center items-center">
@@ -59,7 +78,7 @@ export function SignUpForm() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="first-name">First name</Label>
                 <Input
@@ -82,15 +101,15 @@ export function SignUpForm() {
                   required
                 />
               </div>
-            </div>
+            </div> */}
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={handleEmailChange}
                 placeholder="Boda@example.com"
                 required
               />
@@ -100,18 +119,18 @@ export function SignUpForm() {
               <Input
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={handlePasswordChange}
                 type="password"
               />
             </div>
-            <Button type="submit" className="w-full" onSubmit={handleSubmit}>
+            <Button type="submit" className="w-full" onClick={handleSubmit}>
               Create an account
             </Button>
             {/* <Button variant="outline" className="w-full">
               Sign up with Google
             </Button> */}
-            <GoogleLoginButton />
+            {/* <GoogleLoginButton /> */}
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
@@ -123,4 +142,6 @@ export function SignUpForm() {
       </Card>
     </div>
   );
-}
+};
+
+export default SignUpForm;

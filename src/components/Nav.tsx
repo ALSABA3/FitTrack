@@ -5,7 +5,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import ModeToggle from "@/components/mode-toggle";
+import ModeToggle from "@/components/ui/mode-toggle";
 import { useEffect, useState } from "react";
 
 const Nav = () => {

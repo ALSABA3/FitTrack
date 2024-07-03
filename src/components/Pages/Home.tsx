@@ -5,7 +5,6 @@ import instagram from "@/assets/instagram.png";
 import facebook from "@/assets/facebook.png";
 import linkedin from "@/assets/linkedin.png";
 import data from "@/dummyReviews.json";
-
 import {
   Carousel,
   CarouselContent,
@@ -16,7 +15,7 @@ import {
 
 const GetApp = () => {
   return (
-    <section className="mt-8 container">
+    <section className="mt-8 container" id="GetTheApp">
       <div className="mx-auto grid grid-cols-2 gap-16 items-center">
         <div>
           <h2 className="leading-10 text-4xl tracking-tighter font-mine mb-4 text-stone-950">
@@ -206,7 +205,10 @@ const HowItWorks = () => {
 
 const Review = () => {
   return (
-    <section className="flex flex-col py-20 bg-primary items-center content-center mt-6">
+    <section
+      className="flex flex-col py-20 bg-primary items-center content-center mt-6"
+      id="Reviews"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

@@ -1,36 +1,62 @@
-import { useContext } from "react";
-import { CartContext } from "./shopping-cart";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { cartActions } from "@/components/Store/cart-slice";
 
+// Define the props interface
 interface ProductProps {
   id: string;
   image: string;
   title: string;
-  price: number;
   description: string;
+  price: number;
 }
 
-export default function Product({
+const Product: React.FC<ProductProps> = ({
   id,
   image,
   title,
   price,
   description,
-}: ProductProps) {
-  const { addItemToCart } = useContext(CartContext);
+}) => {
+  const dispatch = useDispatch();
+
+  const addHandler = () => {
+    dispatch(
+      cartActions.addItem({
+        id,
+        image,
+        title,
+        description,
+        price,
+        quantity: 1,
+        totalPrice: price,
+      })
+    );
+  };
 
   return (
-    <article className="product">
-      <img src={image} alt={title} />
-      <div className="product-content">
-        <div>
-          <h3>{title}</h3>
-          <p className="product-price">${price}</p>
-          <p>{description}</p>
-        </div>
-        <p className="product-actions">
-          <button onClick={() => addItemToCart(id)}>Add to Cart</button>
-        </p>
-      </div>
-    </article>
+    <Card key={id} className="">
+      <CardHeader>
+        <img src={image} alt={title} />
+      </CardHeader>
+      <CardContent>
+        <CardTitle className="mb-2">{title}</CardTitle>
+        <CardDescription className="mt-2">{description}</CardDescription>
+      </CardContent>
+      <CardFooter>
+        <p className="mr-4">{price} $</p>
+        <Button onClick={addHandler}>add to cart</Button>
+      </CardFooter>
+    </Card>
   );
-}
+};
+
+export default Product;

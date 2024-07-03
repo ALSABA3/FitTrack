@@ -1,63 +1,62 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import useAuth from "./components/useAuth";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
-import LoggedNav from "@/components/LoggedNav";
-import CartContextProvider from "@/components/shopping-cart.jsx";
-import Home from "./Pages/Home";
-import { LoginForm } from "./Pages/Login";
-import { SignUpForm } from "./Pages/Signup";
-import Shop from "@/Pages/Shop";
-import Nav from "./components/Nav";
-import Dashboard from "./Pages/Dashboard";
-import Error from "./Pages/Error";
-import Profile from "./Pages/Profile";
-import Meals from "./Pages/Meals";
-import WorkOut from "./Pages/WorkOut";
+import { useAppSelector } from "./components/Store/hooks";
+import Home from "@/components/Pages/Home";
+import LoginForm from "@/components/Pages/Login";
+import SignUpForm from "@/components/Pages/Signup";
+import Shop from "@/components/Pages/Shop";
+import Dashboard from "@/components/Pages/Dashboard";
+import Error from "@/components/Pages/Error";
+import Profile from "@/components/Pages/Profile";
+import Meals from "@/components/Pages/Meals";
+import WorkOut from "@/components/Pages/WorkOut";
+import { Layout, LoggedLayout } from "./components/Layout";
+import Blogs from "@/components/Pages/Blogs";
+import Blog from "@/components/Blog";
 
-// import { ModeToggle } from "./components/mode-toggle";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "Login", element: <LoginForm /> },
+      { path: "SignUp", element: <SignUpForm /> },
+    ],
+  },
+]);
+
+const loggedRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoggedLayout />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "WorkOut", element: <WorkOut /> },
+      { path: "Meals", element: <Meals /> },
+      {
+        path: "Blogs",
+        element: <Blogs />,
+      },
+      { path: "Shop", element: <Shop /> },
+      { path: "Profile", element: <Profile /> },
+      { path: "Blogs/:id", element: <Blog /> },
+    ],
+  },
+]);
 
 function App() {
-  const { isLoggedIn, accessToken, login, logout } = useAuth();
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <CartContextProvider>
-          <BrowserRouter>
-            {isLoggedIn ? <LoggedNav logout={logout} /> : <Nav />}
-            <Routes>
-              <Route
-                path="/"
-                element={isLoggedIn ? <Dashboard /> : <Home />}
-              ></Route>
-              <Route
-                path="/Login"
-                element={
-                  isLoggedIn ? <Dashboard /> : <LoginForm login={login} />
-                }
-              ></Route>
-              <Route
-                path="/SignUp"
-                element={isLoggedIn ? <Dashboard /> : <SignUpForm />}
-              ></Route>
-              <Route
-                path="/Shop"
-                element={isLoggedIn ? <Shop /> : <Error />}
-              ></Route>
-              <Route
-                path="/Profile"
-                element={isLoggedIn ? <Profile /> : <Error />}
-              ></Route>
-              <Route
-                path="/Meals"
-                element={isLoggedIn ? <Meals /> : <Error />}
-              ></Route>
-              <Route
-                path="/WorkOut"
-                element={isLoggedIn ? <WorkOut /> : <Error />}
-              ></Route>
-            </Routes>
-          </BrowserRouter>
-        </CartContextProvider>
+        {isLoggedIn ? (
+          <RouterProvider router={loggedRouter} />
+        ) : (
+          <RouterProvider router={router} />
+        )}
       </ThemeProvider>
     </>
   );

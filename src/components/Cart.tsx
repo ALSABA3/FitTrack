@@ -1,60 +1,87 @@
-import { useContext } from "react";
-import { CartContext } from "@/components/shopping-cart";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/components/Store"; // Import RootState type from your store
+import { cartActions } from "@/components/Store/cart-slice";
 
-export default function Cart() {
-  const { items, updateItemQuantity } = useContext(CartContext);
+const Cart: React.FC = () => {
+  // Define the type for cart items
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const amount = useSelector((state: RootState) => state.cart.totalAmount);
 
-  const totalPrice = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
+  const dispatch = useDispatch();
+
+  const addHandler = (
+    id: string,
+    image: string,
+    title: string,
+    description: string,
+    price: number
+  ) => {
+    dispatch(
+      cartActions.addItem({
+        id,
+        image,
+        title,
+        description,
+        price,
+        quantity: 1,
+        totalPrice: price,
+      })
+    );
+  };
+
+  const removeHandler = (id: string) => {
+    dispatch(cartActions.removeItem(id));
+  };
 
   return (
     <div id="cart">
-      {items.length === 0 && <p>No items in cart!</p>}
-      {items.length > 0 && (
-        <ul id="cart-items">
-          {items.map((item) => {
-            const formattedPrice = `$${item.price.toFixed(2)}`;
-
-            return (
-              <li
-                key={item.id}
-                className="m-4 flex flex-row items-center content-between"
+      <h2>Your Shopping Cart</h2>
+      <ul id="cart-items">
+        {cartItems.map((item) => (
+          <li
+            key={item.id}
+            className="m-4 flex flex-row items-center content-between"
+          >
+            <div className="w-full flex items-center">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-16 mr-4 rounded-sm"
+              />
+              <span className="mr-4">{item.title}</span>
+              <span className="mr-4"> {item.price} $</span>
+            </div>
+            <div className="cart-item-actions flex">
+              <button
+                className="mx-2 text-white bg-red-600 rounded-sm p-2"
+                onClick={() => removeHandler(item.id)}
               >
-                <div className="w-full flex items-center">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="w-16 mr-4 rounded-sm"
-                  />
-                  <span className="mr-4">{item.name}</span>
-                  <span className="mr-4"> ({formattedPrice})</span>
-                </div>
-                <div className="cart-item-actions flex">
-                  <button
-                    className="mx-2 text-white bg-red-600 rounded-sm p-2"
-                    onClick={() => updateItemQuantity(item.id, -1)}
-                  >
-                    Remove
-                  </button>
-                  <span className="text-3xl">{item.quantity}</span>
-                  <button
-                    className="mx-2 text-white bg-green-600 rounded-sm p-2"
-                    onClick={() => updateItemQuantity(item.id, 1)}
-                  >
-                    Add
-                  </button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      )}
+                Remove
+              </button>
+              <span className="text-3xl">{item.quantity}</span>
+              <button
+                className="mx-2 text-white bg-green-600 rounded-sm p-2"
+                onClick={() =>
+                  addHandler(
+                    item.id,
+                    item.image,
+                    item.title,
+                    item.description,
+                    item.price
+                  )
+                }
+              >
+                Add
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
       <p id="cart-total-price" className="text-xl text-center">
-        Cart Total: <strong>{formattedTotalPrice}</strong>
+        Cart Total: <strong>{amount}</strong>
       </p>
     </div>
   );
-}
+};
+
+export default Cart;

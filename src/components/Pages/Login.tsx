@@ -10,11 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Store/hooks";
+import { authActions } from "../Store/auth-slice";
 
-export function LoginForm() {
+const LoginForm = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -24,15 +28,15 @@ export function LoginForm() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email,
-        password,
+      const response = await axios.post("http://localhost:5000/login", {
+        userEmail: email,
+        userPassword: password,
       });
-      if (response.data.message === "Signin successful") {
-        // login();
+      if (response.data.message === "logged in") {
+        dispatch(authActions.login(response.data.accessToken));
+        navigate("/");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -81,7 +85,7 @@ export function LoginForm() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick={handleSubmit}>
               Login
             </Button>
             <Button variant="outline" className="w-full">
@@ -98,4 +102,6 @@ export function LoginForm() {
       </Card>
     </div>
   );
-}
+};
+
+export default LoginForm;

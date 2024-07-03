@@ -1,44 +1,146 @@
 [
   {
     "id": "p1",
-    "image": "/public/shop/mocha-overcoat.jpg",
-    "title": "Majestic Vintage Mocha Overcoat",
-    "price": 129.99,
-    "description": "Channel timeless sophistication with this stunning mocha overcoat. Crafted for the discerning gentleman who appreciates the fine blend of vintage charm and modern elegance."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/58b1e00c-696a-4af2-bd20-4a26d306ec22/dri-fit-one-luxe-k%C4%B1salt%C4%B1lm%C4%B1%C5%9F-atleti-BBX1tW.png",
+    "title": "Nike Dri-FIT One Luxe",
+    "price": 35.99,
+    "description": "This tight, stretchy tank keeps you comfortable while you run errands or sweat it out in the studio. Part of the Nike Luxe series, this luxe style is made from super-soft, smooth fabric that's breathable to keep you dry and cool. Racerback straps and cut-outs in the back increase airflow in high-heat areas.",
+    "filters": ["Female", "T-Shirts", "Nike"]
   },
   {
     "id": "p2",
-    "image": "/public/shop/dream-gown.jpg",
-    "title": "Enchanting Blush Dream Gown",
-    "price": 189.99,
-    "description": "Bask in the glow of elegance with our Enchanting Blush Dream Gown. Embody the regality of a queen with a sweet touch of pink that whispers enchantment. This is the perfect piece for those seeking to create unforgettable moments."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/0e9a96df-baba-4b94-9a4d-cace1c4da98f/pro-8-900-%C5%9Fortu-3ZtGX0.png",
+    "title": "Nike Pro",
+    "price": 35.99,
+    "description": "The Nike Pro Shorts are made with stretchy, stylish, and supportive fabric to help keep you dry and comfortable during your workout. This product is made with at least 50% recycled polyester fiber.",
+    "filters": ["Female", "Shorts", "Nike"]
   },
   {
     "id": "p3",
-    "image": "/public/shop/rain-jacket.jpg",
-    "title": "Vintage Sunshine Rain Jacket",
-    "price": 49.99,
-    "description": "Brace the showers in style! Our Vintage Sunshine Rain Jacket ensures that you stand out, even in the dullest weather. Because rain is never a reason to compromise on your fashion quotient."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/32ba609a-2340-4bef-a73e-4c44e1631229/free-rn-nn-yol-ko%C5%9Fu-ayakkab%C4%B1s%C4%B1-JfK8JD.png",
+    "title": "Nike Free RN NN",
+    "price": 143.99,
+    "description": "If you want to be free, these road running shoes are for you. Lightweight and flexible, with a barefoot feel and Flyknit upper, you'll want to run for miles.",
+    "filters": ["Female", "Shoes", "Nike"]
   },
   {
     "id": "p4",
-    "image": "/public/shop/merlot-suit.jpg",
-    "title": "Classic Merlot Business Suit",
-    "price": 249.99,
-    "description": "Step into the boardroom with unmatched confidence in our Classic Merlot Business Suit. Exuding an air of refined class and understated power, it is ideal for the modern executive who values tradition and elegance."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/3b1df2fb-87f0-4b74-bda9-9ead2e16f78d/miler-dri-fit-ko%C5%9Fu-atleti-PFtkKx.png",
+    "title": "Nike Miler",
+    "price": 39.99,
+    "description": "Keep running in this top that lets you move freely. Our sweat-wicking Miler Tank returns with a longer design and ultralight fabric for extra coverage without weighing you down. Its cool, breathable style has a relaxed fit that won't slow you down.",
+    "filters": ["Male", "T-Shirts", "Nike"]
   },
   {
     "id": "p5",
-    "image": "/public/shop/moonlight-dress.jpg",
-    "title": "Ethereal Moonlight Evening Dress",
-    "price": 159.99,
-    "description": "Sweep the room off its feet in our Ethereal Moonlight Evening Dress. Crafted to mimic the allure of the moonlight, this dress is a nod to those who appreciate subtle glamour and a standout silhouette."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/77e95a3c-1e37-4f3b-937f-3dc9cecdd195/fast-dri-fit-slip-astarl%C4%B1-8-900-ko%C5%9Fu-%C5%9Fortu-WRbqzN.png",
+    "title": "Nike Fast",
+    "price": 50.99,
+    "description": "Designed for racing, the Nike Fast Shorts deliver breathability and support so you can move comfortably with every step. The simple, lightweight design and dual top-loading pockets help you get the most out of your runs.",
+    "filters": ["Male", "Shorts", "Nike"]
   },
   {
     "id": "p6",
-    "image": "/public/shop/denim-pioneer.jpg",
-    "title": "Pioneer Rugged Denim Jacket",
-    "price": 79.99,
-    "description": "Our Pioneer Rugged Denim Jacket is a tribute to those who embody the spirit of adventure. Designed with durability and comfort in mind, this jacket is a wardrobe essential for the urban explorer."
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/556d3884-4081-4c5a-88aa-f3711c80742c/free-metcon-6-antrenman-ayakkab%C4%B1s%C4%B1-pTZrPG.png",
+    "title": "Nike Free Metcon 6",
+    "price": 164.99,
+    "description": "From lifting weights to stairs, from grass to dirt, from the field to the track, every workout has a purpose and focus. The Free Metcon 6 lets you power through even the toughest workouts. We’ve added more flexibility to the forefoot and reinforced the heel with extra foam for our most adaptable training shoe, so you can move more freely through dynamic movements during plyometrics and cardio, and have the supportive sole you need to lift weights.",
+    "filters": ["Male", "Shoes", "Nike"]
+  },
+  {
+    "id": "p12",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/07831c8373c94a36b1f71f047294d5e7_9366/AEROREADY_Train_Essentials_Minimal_Branding_Crewneck_Tisort_Gri_IX1011_21_model.jpg",
+    "title": "AEROREADY TRAIN ESSENTIALS MINIMAL BRANDING CREWNECK",
+    "price": 39.99,
+    "description": "Move comfortably, stay dry. This adidas training t-shirt features FreeLift technology to prevent slipping during exercises that require reaching upwards, allowing for full freedom of movement.",
+    "filters": ["Female", "T-Shirts", "Adidas"]
+  },
+  {
+    "id": "p22",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/6ef60e672ff54f999a04189436d3d489_9366/Hyperglam_3-Inch_Tayt_Siyah_IN9299_21_model.jpg",
+    "title": "HYPERGLAM 3-INCH TAYT",
+    "price": 35.99,
+    "description": "This high-waisted cropped legging keeps you comfortable both in the gym and during your daily routine. The model, which has a stylish and body-hugging look, offers comfort with its minimal seams.",
+    "filters": ["Female", "Shorts", "Adidas"]
+  },
+  {
+    "id": "p32",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/2d296ade08c548aea0fe6f71670ed029_9366/Everyset_Trainer_Ayakkabi_Beyaz_ID8661_HM1.jpg",
+    "title": "EVERYSET TRAINER SHOES",
+    "price": 119.99,
+    "description": "The flat shape of the shoe allows you to focus on your posture with a firm footing. The upper of the shoe contains at least 50% recycled material. This product represents just one of our solutions to end plastic waste.",
+    "filters": ["Female", "Shoes", "Adidas"]
+  },
+  {
+    "id": "p42",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/d97d819a3a974e3ebf9bb14a887c5429_9366/Yoga_Premium_Training_Tisortu_Beyaz_IL7138_21_model.jpg",
+    "title": "YOGA PREMİUM TRAİNİNG",
+    "price": 39.99,
+    "description": "Find your calm center in Vinyasa flow with this high-quality adidas yoga shirt. The model, which offers freedom of movement with its soft jersey fabric, helps you maintain your calm with foam details.",
+    "filters": ["Male", "T-Shirts", "Adidas"]
+  },
+  {
+    "id": "p52",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/9a591ff8c5154e0f9208af00008e7a6e_9366/Training_Essentials_Logo_Training_Sortu_Siyah_IB8121_21_model.jpg",
+    "title": "TRAINING ESSENTIALS",
+    "price": 35.99,
+    "description": "With these adidas shorts, you're ready for anything from leg workouts to match day. Zippered pockets keep your small items with you during training.",
+    "filters": ["Male", "Shorts", "Adidas"]
+  },
+  {
+    "id": "p62",
+    "image": "https://assets.adidas.com/images/w_600,f_auto,q_auto/a576eb918c3e45bcaf7ef0b102c17fbe_9366/Everyset_Trainer_Ayakkabi_Beyaz_IF3200_HM1.jpg",
+    "title": "EVERYSET TRAINER SHOES",
+    "price": 119.99,
+    "description": "The flat shape of the shoe allows you to focus on your posture with a firm footing. The upper of the shoe contains at least 50% recycled material. This product represents just one of our solutions to end plastic waste.",
+    "filters": ["Male", "Shoes", "Adidas"]
+  },
+  {
+    "id": "p13",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/V5-1383647-539_FC?rp=standard-0pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=F0F0F0&wid=566&hei=708&size=566,708",
+    "title": "UA Motion Crossover Crop Short Sleeve",
+    "price": 28.99,
+    "description": "This specially engineered fabric delivers a unique type of softness that can still wick sweat like a champ. It's lightweight, it's breathable, and it's ready to work.",
+    "filters": ["Female", "T-Shirts", "Under Armour"]
+  },
+  {
+    "id": "p23",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/V5-1377088-686_FC?rp=standard-0pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=F0F0F0&wid=566&hei=708&size=566,708",
+    "title": "UA Motion Bike Shorts",
+    "price": 20.99,
+    "description": "We brushed the fabric on the outside and kept it smooth on the inside for pants that feel just as good when you're working as they do when you first pull them on. They also wick sweat and stay in place with a smooth, high-rise waist.",
+    "filters": ["Female", "Shorts", "Under Armour"]
+  },
+  {
+    "id": "p33",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/3027176-103_DEFAULT?rp=standard-30pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=f0f0f0&wid=566&hei=708&size=536,688",
+    "title": "UA Dynamic IntelliKnit Training Shoes",
+    "price": 119.99,
+    "description": "UA Dynamic is the ultimate training shoe for the team sports athlete. It combines the bounce and cushioning of a running shoe with the support and grip of a weightlifting shoe, so you can tackle any workout without slowing down.",
+    "filters": ["Female", "Shoes", "Under Armour"]
+  },
+  {
+    "id": "p43",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/V5-1383225-464_FC?rp=standard-0pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=F0F0F0&wid=566&hei=708&size=566,708",
+    "title": "Project Rock Balance Tank",
+    "price": 23.99,
+    "description": "Project Rock training gear was built to help you find boundaries, then push right through them. Everything in this collection was personally approved by Dwayne Johnson, the hardest worker in the room. ANY room.",
+    "filters": ["Male", "T-Shirts", "Under Armour"]
+  },
+  {
+    "id": "p53",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/V5-1383356-002_FC?rp=standard-0pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=F0F0F0&wid=566&hei=708&size=566,708",
+    "title": "UA Tech™ Woven Wordmark Shorts",
+    "price": 13.99,
+    "description": "The goal with the UA Woven collection was to make the perfect set of warm-ups that keep your muscles ready, work for any sport, and also pack up super-small in your bag, so you can take them anywhere.",
+    "filters": ["Male", "Shorts", "Under Armour"]
+  },
+  {
+    "id": "p63",
+    "image": "https://underarmour.scene7.com/is/image/Underarmour/3026534-800_DEFAULT?rp=standard-30pad|pdpMainDesktop&scl=1&fmt=jpg&qlt=85&resMode=sharp2&cache=on,on&bgc=f0f0f0&wid=566&hei=708&size=536,688",
+    "title": "Project Rock 6 Training Shoes",
+    "price": 144.99,
+    "description": "The new PR6 features upgrades developed and put to the test by Dwayne Johnson. This new version of a community favorite is more supportive, comfortable, and stable than ever before.",
+    "filters": ["Male", "Shoes", "Under Armour"]
   }
 ]

@@ -1,0 +1,31 @@
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "userEmail": "testing@gmail.com",
+    "userPassword": "Logicar9000logicar"
+}
+###
+
+POST http://localhost:4000/user/signup
+Content-Type: application/json
+
+{
+    "userEmail": "testing@gmail.com",
+    "userPassword": "Password1234"
+}
+
+###
+
+POST http://localhost:4000/profile/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJfaWQiOiI2NjdmN2YyYmUwMzkwMGVjMjFhNWJhODUifSwiaWF0IjoxNzE5NjMxNjkzfQ.6fUi7Y4WfbfVB_zZzYSl3MBwM9Wz6DBd8vEnnMi_MJ0
+
+{
+    "userID": "667f7f2be03900ec21a5ba85",
+    "profileName": "person",
+    "dateofbirth": "1990-01-01",
+    "height": "178",
+    "weight": "80",
+    "gender": "male"
+}
