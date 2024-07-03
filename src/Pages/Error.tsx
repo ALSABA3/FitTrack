@@ -1,7 +1,10 @@
-import React from "react";
-
 const Error = () => {
-  return <div>Erorr</div>;
+  return (
+    <>
+      <h1>An Error Occured!</h1>
+      <h2>could not find this page!</h2>
+    </>
+  );
 };
 
 export default Error;

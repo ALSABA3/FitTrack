@@ -1,13 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import useAuth from "./components/useAuth";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
-import LoggedNav from "@/components/LoggedNav";
-import CartContextProvider from "@/components/shopping-cart.jsx";
 import Home from "./Pages/Home";
 import { LoginForm } from "./Pages/Login";
 import { SignUpForm } from "./Pages/Signup";
 import Shop from "@/Pages/Shop";
-import Nav from "./components/Nav";
 import Dashboard from "./Pages/Dashboard";
 import Error from "./Pages/Error";
 import Profile from "./Pages/Profile";
@@ -15,15 +11,49 @@ import Meals from "./Pages/Meals";
 import Workouts from "./Pages/Workouts";
 import Library from "./Pages/Library";
 import {observer} from "mobx-react-lite"; 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import { Context } from "./main";
+import { Layout, LoggedLayout } from "./components/Layout";
+import Blogs from "./Pages/Blogs";
+import Blog from "./components/Blog";
 
-// import { ModeToggle } from "./components/mode-toggle";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "Login", element: <LoginForm /> },
+      { path: "SignUp", element: <SignUpForm /> },
+    ],
+  },
+]);
+
+const loggedRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoggedLayout />,
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "Workouts", element: <Workouts /> },
+      { path: "Meals", element: <Meals /> },
+      {
+        path: "Blogs",
+        element: <Blogs />,
+      },
+      { path: "Shop", element: <Shop /> },
+      { path: "Profile", element: <Profile /> },
+      { path: "Blogs/:id", element: <Blog /> },
+      { path: "Library", element: <Library/>},
+      { path: "Dashboard", element: <Dashboard/>}
+    ],
+  },
+]);
 
 function App() {
   const {store} = useContext(Context);
-  
-  const { isLoggedIn, accessToken, login, logout } = useAuth();
 
   const checkAuth = async () =>{
     await store.checkAuth();
@@ -38,63 +68,14 @@ function App() {
     }     
   }, [store.isAuth]);
 
-  console.log(store.isAuth)
-
   return (
-    <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <CartContextProvider>
-          <BrowserRouter>
-            {store.isAuth ? <LoggedNav logout={logout} /> : <Nav />}
-            
-            <Routes>
-              <Route
-                path="/"
-                element={store.isAuth ? <Dashboard /> : <Home />} 
-              ></Route>
-              <Route
-                path="/Login"
-                element={
-                  store.isAuth ? <Dashboard /> : <LoginForm login={login} />
-                }
-              ></Route>
-              <Route
-                path="/SignUp"
-                element={store.isAuth ? <Dashboard /> : <SignUpForm />}
-              ></Route>
-              <Route
-                path="/Shop"
-                element={store.isAuth ? <Shop /> : <Error />} 
-              ></Route> 
-              <Route
-                path="/Profile"
-                element={store.isAuth ? <Profile /> : <Error />}
-              ></Route>
-              <Route
-                path="/Meals"
-                element={store.isAuth ? <Meals /> : <Error />}
-              ></Route>
-              <Route
-                path="/WorkOut"
-                element={store.isAuth ? <Workouts /> : <Error />}
-              ></Route>
-              <Route
-                path="/Library"
-                element= {<Library/>}
-              ></Route>
-              
-              <Route
-                path="/Dashboard"
-                element={
-                  store.isAuth  ? <Dashboard /> : <Error />}
-              ></Route>
-
-              
-            </Routes>
-          </BrowserRouter>
-        </CartContextProvider>
+        {store.isAuth ? (
+          <RouterProvider router={loggedRouter} />
+        ) : (
+          <RouterProvider router={router} />
+        )}
       </ThemeProvider>
-    </>
   );
 }
 

@@ -9,9 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext, useState } from "react";
-import axios from "axios";
-import GoogleLoginButton from "./../components/ui/GoogleLoginButton";
-import AuthService from "@/services/AuthService";
 import { Context } from "@/main";
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';

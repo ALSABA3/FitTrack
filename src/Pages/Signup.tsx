@@ -35,6 +35,7 @@ export function SignUpForm() {
     }));
     
   };
+
   const registration = async () =>{
     try{
       const user = await store.registration(formData.email, formData.password);
@@ -47,28 +48,6 @@ export function SignUpForm() {
     }
   }
 
-  const handleSubmit = async (e: any) => {
-    console.log(formData);
-    e.preventDefault();
-    
-    try {
-     
-      await AuthService.registration(formData.email, formData.password  )
-    } catch (error: any) {
-      console.error(
-        "Error:",
-        error.response?.data?.error || "An error occurred"
-      );
-    }
-  };
-
-  const responseMessage = (response: any) => {
-    console.log(response);
-  };
-  const errorMessage = (error: any) => {
-    console.log(error);
-  };
-
   return (
     <div className="container h-screen flex justify-center items-center">
       <Card className="mx-auto max-w-sm">
@@ -80,30 +59,7 @@ export function SignUpForm() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input
-                  id="first-name"
-                  name="first_Name"
-                  value={formData.first_Name}
-                  onChange={handleChange}
-                  placeholder="Boda"
-                  required
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input
-                  id="last-name"
-                  name="last_Name"
-                  value={formData.last_Name}
-                  onChange={handleChange}
-                  placeholder="Alsabaa"
-                  required
-                />
-              </div>
-            </div>
+            
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -131,8 +87,10 @@ export function SignUpForm() {
             </Button>
             {/* <Button variant="outline" className="w-full">
               Sign up with Google
-            </Button> */}
-            <GoogleLoginButton />
+            </Button> 
+            <GoogleLoginButton />*/
+            }
+            
           </div>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}

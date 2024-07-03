@@ -9,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { Context } from "@/main";
 
 export function LoginForm() {
@@ -24,21 +23,6 @@ export function LoginForm() {
 
   const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login", {
-        email,
-        password,
-      });
-      if (response.data.message === "Signin successful") {
-        // login();
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
   };
 
   return (
@@ -86,9 +70,12 @@ export function LoginForm() {
             <Button type="submit" className="w-full" onClick = {() => store.login(email, password)}>
               Login
             </Button>
-            <Button variant="outline" className="w-full">
+            {
+              /*
+              <Button variant="outline" className="w-full">
               Login with Google
-            </Button>
+            </Button>*/
+            }
           </div>
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{" "}
