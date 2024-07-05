@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -6,26 +9,59 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import blogs from "@/dummyBlogs.json";
 import BlogSideFilter from "@/components/BlogSideFilter";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+
+interface Blog {
+  _id: string;
+  title: string;
+  description: string;
+  img: string;
+  category: string[];
+}
 
 const Blogs: React.FC = () => {
-  const [filters, setFilters] = useState({
-    type: [],
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [filters, setFilters] = useState<{ category: string[] }>({
+    category: [],
   });
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  const handleFilterChange = (newFilters) => {
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get<Blog[]>("http://localhost:4000/blog");
+        setBlogs(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  const handleFilterChange = (newFilters: { category: string[] }) => {
     setFilters(newFilters);
   };
 
   const filteredBlogs = blogs.filter((blog) => {
-    const typeMatch = filters.type.length
-      ? filters.type.some((type) => blog.type.includes(type))
-      : true;
-    return typeMatch;
+    const categoryMatch =
+      filters.category.length === 0 ||
+      filters.category.some((category) => blog.category.includes(category));
+    return categoryMatch;
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading blogs. Please try again later.</div>;
+  }
+
   return (
     <section id="blogs" className="flex flex-col mt-20">
       <h2 className="text-5xl font-semibold mb-24 text-center">Blogs</h2>
@@ -33,9 +69,9 @@ const Blogs: React.FC = () => {
         <BlogSideFilter onFilterChange={handleFilterChange} />
         <div className="blogs-list mx-auto w-3/4 flex">
           {filteredBlogs.map((blog) => (
-            <Card key={blog.id} className="max-w-96 m-4">
+            <Card key={blog._id} className="max-w-96 m-4">
               <CardHeader>
-                <img src={blog.image} alt={blog.title} className="" />
+                <img src={blog.img} alt={blog.title} className="" />
               </CardHeader>
               <CardContent>
                 <CardTitle className="mb-2">{blog.title}</CardTitle>
@@ -44,7 +80,7 @@ const Blogs: React.FC = () => {
                 </CardDescription>
               </CardContent>
               <CardFooter>
-                <Link to={blog.id}>Read More</Link>
+                <Link to={`/blogs/${blog._id}`}>Read More</Link>
               </CardFooter>
             </Card>
           ))}

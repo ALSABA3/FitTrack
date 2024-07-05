@@ -13,9 +13,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -25,45 +26,19 @@ interface UserProfile {
   gender: string;
   height: number;
   weight: number;
-  dateofbirth: string;
+  dateOfBirth: string;
 }
 
-const Profile: React.FC = () => {
+const ProfileCreation = () => {
   const [profile, setProfile] = useState<UserProfile>({
     firstName: "",
     lastName: "",
     gender: "",
     height: 0,
     weight: 0,
-    dateofbirth: "", // Ensure the initial value is an empty string
+    dateOfBirth: "",
   });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch the existing profile data from the server when the component mounts
-    const fetchProfile = async () => {
-      try {
-        const token = Cookies.get("accessToken");
-        const response = await axios.get("http://localhost:4000/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = response.data;
-        // Extract only the date part from the ISO string
-        if (data.dateofbirth) {
-          data.dateofbirth = data.dateofbirth.split("T")[0];
-        }
-        setProfile(data);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, []);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,9 +46,7 @@ const Profile: React.FC = () => {
       ...prevProfile,
       [name]: value,
     }));
-    console.log(name, value); // Added for debugging
   };
-
   const handleGenderChange = (value: string) => {
     setProfile((prevProfile) => ({
       ...prevProfile,
@@ -83,24 +56,25 @@ const Profile: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(profile);
     try {
       const token = Cookies.get("accessToken");
-      await axios.put("http://localhost:4000/profile/", profile, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert("Profile updated successfully!");
+      const response = await axios.post(
+        "http://localhost:4000/profile",
+        profile,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response?.data?.message);
+      alert("Profile created successfully!");
+      navigate("/");
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile.");
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="container h-screen flex justify-center items-center">
@@ -179,12 +153,12 @@ const Profile: React.FC = () => {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="dateofbirth">Date of Birth</Label>
+                <Label htmlFor="dateOfBirth">Date of Birth</Label>
                 <Input
-                  id="dateofbirth" // Ensure the id matches here
+                  id="dateOfBirth"
                   type="date"
-                  name="dateofbirth" // Ensure the name matches here
-                  value={profile.dateofbirth}
+                  name="dateOfBirth"
+                  value={profile.dateOfBirth}
                   onChange={handleChange}
                   required
                 />
@@ -202,4 +176,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileCreation;

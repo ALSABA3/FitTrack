@@ -7,7 +7,6 @@ const router = express.Router();
 
 //signup user  ***after sign up must redirect to login and then profile create****
 router.post("/signup", async (req, res) => {
-  console.log(req.body.userEmail);
   const user = new User({
     userEmail: req.body.userEmail,
     userPassword: req.body.userPassword,
@@ -25,8 +24,10 @@ router.post("/signup", async (req, res) => {
   }
   try {
     const newUser = await user.save();
+
     res.status(201).json({ newUser });
   } catch (err) {
+    console.log("hi");
     res.status(400).json({ message: err.message });
   }
 });

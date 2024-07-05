@@ -45,7 +45,7 @@ const SignUpForm = () => {
         });
         if (response.data.message === "logged in") {
           dispatch(authActions.login(response.data.accessToken));
-          navigate("/Profile");
+          navigate("/ProfileCreation");
         }
       } catch (error) {
         console.error("Error logging in:", error);
@@ -54,7 +54,7 @@ const SignUpForm = () => {
     } catch (signupError: any) {
       console.error(
         "Signup error:",
-        signupError.response?.data?.error || "An error occurred during signup"
+        signupError.response?.data?.message || "An error occurred during signup"
       );
       return;
     }

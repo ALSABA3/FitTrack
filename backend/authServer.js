@@ -8,7 +8,6 @@ dotenv.config();
 
 const app = express();
 const port = 5000;
-app.use(cors());
 app.use(express.json());
 const uri = process.env.DATA_BASE_KEY;
 const clientOptions = {
@@ -16,6 +15,7 @@ const clientOptions = {
 };
 mongoose.connect(uri, clientOptions);
 const db = mongoose.connection;
+app.use(cors());
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
 
@@ -29,6 +29,7 @@ app.post("/login", async (req, res) => {
       { userEmail: req.body.userEmail, userPassword: req.body.userPassword },
       "_id"
     );
+    console.log(userID);
     if (exist) {
       const decoded = { id: userID };
       const accessToken = generateAccessToken(decoded);

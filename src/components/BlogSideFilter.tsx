@@ -10,7 +10,7 @@ interface FilterProps {
 }
 
 interface FilterState {
-  type: string[];
+  category: string[];
 }
 
 const typeList = [
@@ -23,7 +23,7 @@ const typeList = [
 
 const BlogSideFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [filters, setFilters] = useState<FilterState>({
-    type: [],
+    category: [],
   });
 
   useEffect(() => {
@@ -45,19 +45,21 @@ const BlogSideFilter: React.FC<FilterProps> = ({ onFilterChange }) => {
   return (
     <aside className="sidebar-filter w-60 fixed">
       <Collapsible className="my-4">
-        <CollapsibleTrigger className="w-full">Type</CollapsibleTrigger>
+        <CollapsibleTrigger className="w-full text-xl mb-4">
+          category
+        </CollapsibleTrigger>
         <CollapsibleContent>
           <div className="flex flex-col">
-            {typeList.map((type) => (
-              <div className="flex items-center content-between" key={type}>
+            {typeList.map((category) => (
+              <div className="flex items-center content-between" key={category}>
                 <label>
                   <input
                     type="checkbox"
                     className="mx-4"
-                    checked={filters.type.includes(type)}
-                    onChange={() => handleCheckboxChange("type", type)}
+                    checked={filters.category.includes(category)}
+                    onChange={() => handleCheckboxChange("category", category)}
                   />
-                  {type}
+                  {category}
                 </label>
               </div>
             ))}

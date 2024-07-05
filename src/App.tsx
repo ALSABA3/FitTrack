@@ -13,6 +13,7 @@ import WorkOut from "@/components/Pages/WorkOut";
 import { Layout, LoggedLayout } from "./components/Layout";
 import Blogs from "@/components/Pages/Blogs";
 import Blog from "@/components/Blog";
+import ProfileCreation from "./components/Pages/ProfileCreation";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const loggedRouter = createBrowserRouter([
       { path: "Shop", element: <Shop /> },
       { path: "Profile", element: <Profile /> },
       { path: "Blogs/:id", element: <Blog /> },
+      { path: "ProfileCreation", element: <ProfileCreation /> },
     ],
   },
 ]);
