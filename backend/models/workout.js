@@ -3,18 +3,25 @@ import mongoose from "mongoose";
 const workoutSchema = new mongoose.Schema({
 
     userId: {
-        Type: mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         required: true
     },
 
     date: { 
-        Type: date,
+        type: Date,
         required: true
     },
 
     exercises: {
-        
-    }
+        type: [
+          {
+            name: { type: String, required: true },
+            sets: { type: [Number], required: true }
+          }
+        ],
+        required: true
+      }
+
 
     
 
